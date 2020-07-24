@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import { DOCUMENT } from "@angular/platform-browser";
-import {SettingsService} from "../../services/settings.service";
+import {SettingsService} from "../../services/service.index";
 
 @Component({
   selector: 'app-account-settings',
@@ -10,7 +9,7 @@ import {SettingsService} from "../../services/settings.service";
 export class AccountSettingsComponent implements OnInit {
 
   //se inyecta  DOM del documento se hace referencia a el DOM
-  constructor( @Inject(DOCUMENT) private _document,
+  constructor(
                public _ajustes: SettingsService) { }
 
   ngOnInit() {
@@ -18,18 +17,14 @@ export class AccountSettingsComponent implements OnInit {
 
   cambiaColor(tema: string,link: any) {
     console.log(tema);
-    this.aplicarrCheck(link);
+    this.aplicarCheck(link);
+    this._ajustes.aplicarTema( tema );
     //declaracion del path general del stilo bacticks para template literal
-    let url = `assets/css/colors/${tema}.css`;
-    this._document.getElementById('tema').setAttribute('href',url);
-    this._ajustes.ajustes.tema = tema;
-    this._ajustes.ajustes.temaUrl = url;
 
-    this._ajustes.guardarAjustes();
   }
 
-  aplicarrCheck( link: any) {
-    let selectores = document.getElementsByClassName('selector');
+  aplicarCheck( link: any) {
+    let selectores: any = document.getElementsByClassName('selector');
 
     for ( let ref of selectores )
     {
